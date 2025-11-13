@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THLM - Integración de Páginas</title>
+  <style>
+    /* ======== ESTILOS GENERALES ======== */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #000, #111);
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+    }
+    nav {
+      background: #1a1a1a;
+      border-bottom: 2px solid #d4af37;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav button {
+      background: #d4af37;
+      color: #000;
+      border: none;
+      margin: 5px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    nav button:hover {
+      background: #e6c75a;
+      transform: translateY(-2px);
+    }
+    section {
+      display: none;
+      padding: 40px 20px;
+      animation: fade 0.4s ease;
+    }
+    section.active {
+      display: block;
+    }
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======== FORMULARIO ======== */
+    .form-container {
+      background: #1a1a1a;
+      border: 2px solid #d4af37;
+      border-radius: 16px;
+      padding: 40px 50px;
+      box-shadow: 0 0 20px rgba(212,175,55,0.5);
+      max-width: 400px;
+      width: 90%;
+      margin: auto;
+    }
+    .form-container h1 {
+      text-align: center;
+      color: #d4af37;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #ccc;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #111;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 8px #d4af37;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .checkbox input {
+      width: auto;
+      margin-right: 8px;
+    }
+    button.form-btn {
+      width: 100%;
+      background: #d4af37;
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 16px;
+    }
+    button.form-btn:hover {
+      background: #e6c75a;
+      transform: translateY(-2px);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #888;
+    }
+    .footer a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+
+    /* ======== MUNDO ANIMAL ======== */
+    .animal-header {
+      background-color: #2e8b57;
+      padding: 20px;
+      color: white;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+    .animal-header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    .animal-header p {
+      color: #f0f0f0;
+      font-size: 18px;
+      margin: 10px 0 0;
+    }
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .galeria img {
+      width: 250px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .galeria img:hover {
+      transform: scale(1.05);
+    }
+    footer.animal-footer {
+      background-color: #2e8b57;
+      color: white;
+      padding: 20px;
+      margin-top: 30px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <button onclick="mostrarSeccion('formulario')">Formulario</button>
+    <button onclick="mostrarSeccion('principal')">Principal</button>
+    <button onclick="mostrarSeccion('mundoAnimal')">Mundo Animal</button>
+  </nav>
+
+  <!-- ======== SECCIÓN FORMULARIO ======== -->
+  <section id="formulario" class="active">
+    <form class="form-container" id="registroTHLM" onsubmit="return validarFormulario()">
+      <h1>Registro THLM</h1>
+      
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label for="usuario">Nombre de usuario</label>
+        <input type="text" id="usuario" name="usuario" required>
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required minlength="6">
+      </div>
+
+      <div class="form-group">
+        <label for="confirmar">Confirmar contraseña</label>
+        <input type="password" id="confirmar" name="confirmar" required>
+      </div>
+
+      <div class="form-group">
+        <label for="edad">Edad</label>
+        <input type="number" id="edad" name="edad" min="10" max="100" required>
+      </div>
+
+      <div class="form-group">
+        <label for="pais">País</label>
+        <select id="pais" name="pais" required>
+          <option value="">Selecciona tu país</option>
+          <option value="colombia">Colombia</option>
+          <option value="mexico">México</option>
+          <option value="argentina">Argentina</option>
+          <option value="chile">Chile</option>
+          <option value="peru">Perú</option>
+          <option value="otros">Otros</option>
+        </select>
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="terminos" required>
+        <label for="terminos">Acepto los términos y condiciones</label>
+      </div>
+
+      <button type="submit" class="form-btn">Registrarme</button>
+
+      <div class="footer">
+        ¿Ya tienes cuenta? <a href="#">Inicia sesión</a>
+      </div>
+    </form>
+  </section>
+
+  <!-- ======== SECCIÓN PRINCIPAL ======== -->
+  <section id="principal">
+    <h1>Bienvenido a la integración de páginas</h1>
+    <p>Explora el formulario de registro y la galería del Mundo Animal desde aquí.</p>
+  </section>
+
+  <!-- ======== SECCIÓN MUNDO ANIMAL ======== -->
+  <section id="mundoAnimal">
+    <div class="animal-header">
+      <h1>Lo hermoso de los animales</h1>
+      <p>Descubre lo lindo de estos hermosos animales</p>
+    </div>
+
+    <div class="galeria">
+      <img src="https://picsum.photos/id/237/250/180" alt="Perro">
+      <img src="https://placekitten.com/250/180" alt="Gato">
+      <img src="https://picsum.photos/id/433/250/180" alt="Pájaro">
+      <img src="https://picsum.photos/id/1024/250/180" alt="Mono">
+      <img src="https://picsum.photos/id/1069/250/180" alt="Tortuga">
+    </div>
+
+    <footer class="animal-footer">
+      <p>"Los animales no hablan nuestro idioma, pero su mirada lo dice todo. En sus ojos habita la pureza que el ser humano muchas veces olvida, y en su silencio se encuentra la lección más grande: amar sin condiciones..."</p>
+    </footer>
+  </section>
+
+  <script>
+    // Mostrar sección activa
+    function mostrarSeccion(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Validar formulario
+    function validarFormulario() {
+      const password = document.getElementById('password').value;
+      const confirmar = document.getElementById('confirmar').value;
+
+      if (password !== confirmar) {
+        alert('Las contraseñas no coinciden');
+        return false;
+      }
+
+      alert('¡Registro exitoso en THLM!');
+      return true;
+    }
+  </script>
+</body>
+</html>
